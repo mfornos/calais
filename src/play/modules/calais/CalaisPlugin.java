@@ -45,20 +45,6 @@ public class CalaisPlugin extends PlayPlugin {
         Injector.inject(source);
     }
 
-    public void loadCalaisClasses() {
-        @SuppressWarnings("rawtypes")
-        List<Class> classes = Play.classloader.getAnnotatedClasses(Entity.class);
-        if (classes != null) {
-            for (Class<?> clazz : classes) {
-                for (Field f : clazz.getFields()) {
-                    if (f.isAnnotationPresent(Semantic.class)) {
-                        cacheField(clazz, f);
-                    }
-                }
-            }
-        }
-    }
-
     @Override
     public void onApplicationStart() {
         Properties p = Play.configuration;
@@ -77,5 +63,19 @@ public class CalaisPlugin extends PlayPlugin {
         }
         fields.add(f);
         calaisFieldCache.put(clazz, fields);
+    }
+
+    private void loadCalaisClasses() {
+        @SuppressWarnings("rawtypes")
+        List<Class> classes = Play.classloader.getAnnotatedClasses(Entity.class);
+        if (classes != null) {
+            for (Class<?> clazz : classes) {
+                for (Field f : clazz.getFields()) {
+                    if (f.isAnnotationPresent(Semantic.class)) {
+                        cacheField(clazz, f);
+                    }
+                }
+            }
+        }
     }
 }
