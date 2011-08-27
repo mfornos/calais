@@ -1,0 +1,6 @@
+self: play -> calais 0.1
+
+require:
+    - play
+    - mx.bigdata.jcalais -> j-calais 0.3
+        
