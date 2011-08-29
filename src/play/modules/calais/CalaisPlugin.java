@@ -19,6 +19,10 @@ import play.PlayPlugin;
 import play.exceptions.UnexpectedException;
 import play.inject.Injector;
 
+/**
+ * Open Calais for Play! Plugin
+ * 
+ */
 public class CalaisPlugin extends PlayPlugin {
     private static ThreadLocal<CalaisClientSource> clientSource = new ThreadLocal<CalaisClientSource>();
 
