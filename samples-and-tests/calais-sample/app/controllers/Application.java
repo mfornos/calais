@@ -90,14 +90,14 @@ public class Application extends Controller {
         render("@Application.post", post);
     }
 
-    public static void showTag(String id) {
-        SocialTag tag = SocialTag.findById(id);
+    public static void showTag(String name) {
+        SocialTag tag = SocialTag.findByName(name);
         notFoundIfNull(tag);
         render(tag);
     }
 
-    public static void showTopic(String id) {
-        Topic topic = Topic.findById(id);
+    public static void showTopic(String name) {
+        Topic topic = Topic.findByName(name);
         notFoundIfNull(topic);
         render(topic);
     }

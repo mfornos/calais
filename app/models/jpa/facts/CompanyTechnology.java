@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 import models.jpa.entities.Company;
+import models.jpa.entities.Technology;
 
 @Entity
 @DiscriminatorValue("CompanyTechnology")
@@ -14,6 +15,7 @@ public class CompanyTechnology extends Fact {
 
     @OneToOne(cascade = CascadeType.ALL)
     public Company company;
-
-    public String technology;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    public Technology technology;
 }

@@ -1,12 +1,14 @@
 #{extends 'main.html' /}
 #{set title:'Topic' /}
 
-<h1>${topic.name} (${topic.topics?.size()})</h1>
-
+<h1 class="section">${topic.name} (${topic.topics?.size()})</h1>
+#{ifnot topic.topics}
+	<div class="alert-message info">
+		<p>No posts to show.</p>
+	</div>
+#{/ifnot}
 <div>
-	<ul>
-		#{list items:topic.topics?.sort(), as: 'detection'}
-			<li><a href="/#${detection.document.reference.id}">${detection.document.reference.title}</a></li>
-		#{/list}
-	</ul>
+	#{list items:topic.topics?.sort(), as: 'detection'}
+		#{showPost detection.document.reference /}
+	#{/list}
 </div>

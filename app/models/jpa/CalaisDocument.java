@@ -44,6 +44,8 @@ public class CalaisDocument extends Model {
     public Date created;
 
     public void clear() {
+        preRemove();
+        save();
         topics = new HashSet<TopicDetection>();
         socialTags = new HashSet<SocialTagDetection>();
         entities = new HashSet<CalaisEntityDetection>();
@@ -67,7 +69,7 @@ public class CalaisDocument extends Model {
         deleteRefs(topics);
         deleteRefs(socialTags);
         deleteRefs(entities);
-        facts = new HashSet<Fact>();
+        facts = null;
     }
 
     private void deleteRefs(Collection<? extends Model> collection) {

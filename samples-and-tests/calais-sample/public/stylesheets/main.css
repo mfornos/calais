@@ -254,11 +254,21 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
 .popover .title{background-color:#f5f5f5;padding:9px 15px;line-height:1;-webkit-border-radius:3px 3px 0 0;-moz-border-radius:3px 3px 0 0;border-radius:3px 3px 0 0;border-bottom:1px solid #eee;}
 .popover .content{background-color:#ffffff;padding:14px;-webkit-border-radius:0 0 3px 3px;-moz-border-radius:0 0 3px 3px;border-radius:0 0 3px 3px;-webkit-background-clip:padding-box;-moz-background-clip:padding-box;background-clip:padding-box;}.popover .content p,.popover .content ul,.popover .content ol{margin-bottom:0;}
 
-.post {margin-bottom: 40px; padding-bottom: 10px; border-bottom: 2px solid #DDD;}
+.post {display:block; margin-bottom: 40px; padding-bottom: 10px; border-bottom: 2px solid #DDD;}
 .post-footer {margin:10px 0; padding: 10px 0; border-top: 1px solid #DDD;display:block;overflow:hidden;}
 .post-footer .separator {margin: 5px 0;}
 body {margin-bottom: 60px;}
 .semantic-data { margin: 20px 0; overflow: hidden; }
-div#jGrowl{margin-top: 50px;}
-div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer { width: 300px !important;}
+div#jGrowl{margin-top: 45px;}
+div.jGrowl-notification {float:right;margin-left:6px;}
+div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer { width: 290px !important; max-height: 400px; overflow: auto; }
 a.anchor, a.anchor:hover{color: inherit; text-decoration: none;}
+h1.section{border-bottom: 2px solid #DDD; margin-bottom: 20px; padding-bottom: 5px;}
+
+/* Tag styles */
+.social-tags { display: block; overflow: hidden; padding: 5px 10px; }
+a.social-tag { margin-bottom:5px; float: left; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px;  border-radius: 4px; padding: 3px 5px; background-color: #0069D6; color: #FFFFFF; margin-right: 5px; }
+a.social-tag:hover {background-color: #0050A3; text-decoration: none; color: #FFFFFF;}
+.social-tag.medium-tag { background-color: #228BF8; }
+.social-tag.large-tag { font-size: 115%; }
+

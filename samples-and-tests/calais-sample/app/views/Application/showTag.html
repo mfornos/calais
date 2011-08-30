@@ -1,12 +1,15 @@
 #{extends 'main.html' /}
 #{set title:'Tag' /}
 
-<h1>${tag.name} (${tag.socialTags?.size()})</h1>
+<h1 class="section">${tag.name} (${tag.socialTags?.size()})</h1>
+#{ifnot tag.socialTags}
+	<div class="alert-message info">
+		<p>No posts to show.</p>
+	</div>
+#{/ifnot}
 
 <div>
-	<ul>
-		#{list items:tag.socialTags?.sort(), as: 'detection'}
-			<li><a href="/#${detection.document.reference.id}">${detection.document.reference.title}</a></li>
-		#{/list}
-	</ul>
+	#{list items:tag.socialTags?.sort(), as: 'detection'}
+		#{showPost detection.document.reference /}
+	#{/list}
 </div>

@@ -1,6 +1,7 @@
 package models.jpa;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 
 import play.db.jpa.Model;
 
@@ -13,4 +14,13 @@ public class Detection extends Model {
     public int length;
 
     public String exact;
+
+    @Lob
+    public String prefix;
+
+    @Lob
+    public String suffix;
+
+    @Lob
+    public String detection;
 }

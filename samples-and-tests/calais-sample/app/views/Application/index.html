@@ -1,14 +1,6 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
-#{set 'moreScripts'}
-	<script type="text/javascript" src="@{'/public/jgrowl-tip/jquery.jgrowl_minimized.js'}"></script>
-#{/set}
-
-#{set 'moreStyles'}
-	<link rel="stylesheet" media="screen" href="@{'/public/jgrowl-tip/jquery.jgrowl.css'}">
-#{/set}
-
 #{if posts}
 	<div style="float:right;">
 		<a href="@{Application.post}" class="btn primary">New Semantic Post</a>
@@ -24,35 +16,5 @@
 #{/else}
 
 #{list items:posts, as:'post' }
-	<div class="post">
-	<h1><a name="${post.id}" class="anchor">${post.title}</a> <a href="@{Application.edit(post.id)}" style="font-size:50%;font-weight: normal;">edit</a> <a href="@{Application.delete(post.id)}" onclick="return confirm('Are you sure?');" style="font-size:50%;font-weight: normal;">delete</a></h1>
-
-	<div class="post-body">
-		${post.content}
-	</div>
-	<div class="post-footer">
-		<div class="separator">
-			<strong>Updated</strong>: ${post.updated.format('MM/dd, yyyy hh:mma')}
-		</div>
-		<div class="separator">
-			<strong>Topics</strong>:
-			#{list items:post.document.topics.sort(), as:'topiclocal'}
-				<a href="@{Application.showTopic(topiclocal.topic.id)}">${topiclocal.topic.name}</a>${topiclocal_isLast ? '' : ', '}
-			#{/list}
-		</div>
-		<div class="separator">
-		<strong>Social Tags</strong>:
-			#{list items:post.document.socialTags.sort(), as:'taglocal'}
-				<a href="@{Application.showTag(taglocal.socialTag.id)}">${taglocal.socialTag.name}</a>${taglocal_isLast ? '' : ', '}
-			#{/list}
-		</div>
-		
-		#{if post.document.entities}
-			<div class="semantic-data">
-				<h2>Semantic data</h2>
-				#{showEntities post.document /}
-			</div>
-		#{/if}
-	</div>
-	</div>
+	#{showPost post /}
 #{/list}

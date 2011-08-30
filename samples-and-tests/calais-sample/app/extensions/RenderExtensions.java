@@ -45,10 +45,5 @@ public class RenderExtensions extends JavaExtensions {
     public static String toId(String uri) {
         return uri.replaceAll("\\.", "_").replaceAll(":", "-").replaceAll("/", "-");
     }
-    
-    public <T extends Comparable<? super T>> List<T> sort(List<T> list) {
-        java.util.Collections.sort(list);
-        return list;
-    }
 
 }

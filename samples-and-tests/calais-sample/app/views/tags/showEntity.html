@@ -16,7 +16,7 @@
 			#{/if}
 			#{if entity.facts}
 			#{list items:entity.facts, as:'fact'}
-				<div id="${fact.id.toId()}" style="margin:10px 0;">
+				<div style="margin:10px 0;">
 					${fact.renderFact().raw()}
 				</div>
 			#{/list}

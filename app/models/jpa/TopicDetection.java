@@ -16,7 +16,7 @@ public class TopicDetection extends Model implements Comparable<TopicDetection> 
     public Topic topic;
 
     public double score;
-
+    
     @Override
     public int compareTo(TopicDetection o) {
         return ((Double) o.score).compareTo(score);

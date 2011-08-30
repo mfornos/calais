@@ -20,6 +20,6 @@ public class SocialTagDetection extends Model implements Comparable<SocialTagDet
 
     @Override
     public int compareTo(SocialTagDetection o) {
-        return ((Integer) o.importance).compareTo(importance);
+        return ((Integer) importance).compareTo(o.importance);
     }
 }

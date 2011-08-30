@@ -1,12 +1,7 @@
 package models.jpa;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
 
 import play.data.validation.Required;
 import play.db.jpa.GenericModel;
@@ -21,9 +16,6 @@ public class DetectionBase extends GenericModel {
 
     @Required
     public String name;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    public List<Detection> instances = new ArrayList<Detection>();
 
     @Override
     public Object _key() {

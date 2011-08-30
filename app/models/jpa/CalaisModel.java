@@ -3,9 +3,11 @@ package models.jpa;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -94,11 +96,12 @@ public class CalaisModel extends Model {
 
             if (sentity != null) {
                 CalaisEntityDetection ed = new CalaisEntityDetection();
+                extractDetections(entity, ed.instances);
+                sentity.detections.add(ed);
                 ed.document = document;
                 ed.relevance = getDouble(entity.getField("relevance"));
                 ed.entity = sentity;
-                document.entities.add(ed);
-                ed.save();
+                document.entities.add((CalaisEntityDetection) ed.save());
             }
         }
 
@@ -178,10 +181,26 @@ public class CalaisModel extends Model {
             }
             if (isFull || requestedAnalysis.contains(AnalysisType.ENTITIES)) {
                 addEntities(response);
+                document.save();
                 addFacts(response);
             }
         } catch (IOException e) {
             throw new UnexpectedException(e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void extractDetections(CalaisObject entity, List<Detection> detections) {
+        Iterable<Map<String, Object>> instances = entity.getList("instances");
+        for (Map<String, Object> instance : instances) {
+            Detection detection = new Detection();
+            detection.detection = (String) instance.get("detection");
+            detection.exact = (String) instance.get("exact");
+            detection.prefix = (String) instance.get("prefix");
+            detection.suffix = (String) instance.get("suffix");
+            detection.offset = (Integer) instance.get("offset");
+            detection.length = (Integer) instance.get("length");
+            detections.add(detection);
         }
     }
 
@@ -195,15 +214,16 @@ public class CalaisModel extends Model {
         return i;
     }
 
-    private void map(CalaisObject item, Object obj) {
+    private void map(CalaisObject item, DetectionBase obj, String oid) {
         Class<?> clazz = obj.getClass();
         Field[] fields = clazz.getFields();
+        List<Field> relationsToMap = new ArrayList<Field>();
         for (Field f : fields) {
             try {
                 String name = f.getName().toLowerCase();
                 if (!Collection.class.isAssignableFrom(f.getType())) {
                     if (CalaisEntity.class.isAssignableFrom(f.getType())) {
-                        mapRelation(item, (Fact) obj, f, name);
+                        relationsToMap.add(f);
                     } else {
                         f.set(obj, ConvertUtils.convert(item.getField(name), f.getType()));
                     }
@@ -224,6 +244,17 @@ public class CalaisModel extends Model {
                 throw new UnexpectedException(e);
             }
         }
+
+        obj.id = oid;
+        obj = obj.save();
+
+        for (Field f : relationsToMap) {
+            try {
+                mapRelation(item, (Fact) obj, f, f.getName());
+            } catch (IllegalAccessException e) {
+                throw new UnexpectedException(e);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -240,9 +271,7 @@ public class CalaisModel extends Model {
             } catch (IllegalAccessException e) {
                 throw new UnexpectedException(e);
             }
-            map(item, obj);
-            obj.id = oid;
-            obj.save();
+            map(item, obj, oid);
         }
 
         return (T) obj;
@@ -262,6 +291,7 @@ public class CalaisModel extends Model {
             if (entity != null) {
                 f.set(obj, entity);
                 entity.facts.add(obj);
+                entity.save();
             } else {
                 Logger.warn("No entity for id: %s", eid);
             }

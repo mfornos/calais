@@ -5,6 +5,8 @@
 # Home page
 GET     /                                       Application.index
 *       /analyze                                Application.analyze
+GET     /tag/{name}                            Application.showTag
+GET     /topic/{name}                            Application.showTopic
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
