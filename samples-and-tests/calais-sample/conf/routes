@@ -4,7 +4,6 @@
 
 # Home page
 GET     /                                       Application.index
-*       /admin                                  module:crud
 *       /analyze                                Application.analyze
 
 # Ignore favicon requests
