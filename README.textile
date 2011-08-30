@@ -75,7 +75,7 @@ bc.. myEntity.analyze(EnumSet.of(AnalysisType.TOPICS, AnalysisType.SOCIAL_TAGS))
 p. Once analyzed, your model presents a reference to a populated CalaisDocument, using it you can obtain any type of semantic data.
 
 bc.. #{list items:myEntity.document.topics, as:'topiclocal'}
-	${topiclocal.topic.name} ${topiclocal.importance}
+	${topiclocal.topic.name} ${topiclocal.score}
 #{/list}
 
 p. Note: The intermediate entity between the Calais Entity and the Document holds data relative to the relevance of the detection and the location of this detection on your document.
