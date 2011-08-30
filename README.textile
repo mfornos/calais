@@ -1,1 +1,95 @@
-[Here the doc... soon!]
+h1. Calais Play! Module
+
+A module that adds semantic capabilities to your applications by the magic of Open Calais.
+
+h2. What is Open Calais?
+
+Calais is a rapidly growing toolkit that allow you to readily incorporate state-of-the-art semantic functionality within your blog, content management system, website or application.
+
+h2. <a name="fts">Features</a>
+
+* Integration with Open Calais using j-calais
+* JPA model semantically enriched for your apps
+
+h2. <a name="usg">Usage</a>
+
+Install locally this module
+
+bc.. $ play install calais-{version}
+
+p. Declare the proper dependency in conf/dependencies.yml
+
+bc.. require:
+    - play -> calais {version}
+    
+p. and let Play download and install the dependencies 
+
+bc.. $ play deps
+    
+p. Configure Calais in conf/application.conf
+
+bc.. ## Calais module configuration
+calais.api.key=[HERE YOUR API KEY]
+
+p. If you don't have a Calais api key, <a href="http://www.opencalais.com/APIkey">request one</a>
+
+You can use Play-Calais in various ways. 
+
+1) If your application has a jpa model and you want enrich it, ensure that your entity extends CalaisModel, annotate semantic fields with @Semantic and call analyze. Take a look.
+
+The model:
+
+bc.. @Entity
+public class MyEntity extends CalaisModel {
+
+    @Required
+    @MaxSize(255)
+    @Semantic
+    public String title;
+
+    @Lob
+    @Required
+    @MaxSize(10000)
+    @Semantic
+    public String content;
+    
+    ...
+}
+
+p. Analyzing:
+
+bc.. public static void someMethod(...) {
+   ...
+   
+   myEntity.analyze().save();
+   
+   ...
+}
+
+p. You can specify the type of analysis using an EnumSet this way:
+
+bc.. myEntity.analyze(EnumSet.of(AnalysisType.TOPICS, AnalysisType.SOCIAL_TAGS));
+
+p. Once analyzed, your model presents a reference to a populated CalaisDocument, using it you can obtain any type of semantic data.
+
+bc.. #{list items:myEntity.document.topics, as:'topiclocal'}
+	${topiclocal.topic.name} ${topiclocal.importance}
+#{/list}
+
+p. Note: The intermediate entity between the Calais Entity and the Document holds data relative to the relevance of the detection and the location of this detection on your document.
+
+p. 2) Using the client directly
+
+bc.. public class Application extends Controller {
+
+    @Inject
+    static CalaisClient client;
+    
+    ...
+}
+
+p. // 
+
+
+
+
