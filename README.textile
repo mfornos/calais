@@ -11,7 +11,7 @@ h2. <a name="fts">Features</a>
 * Integration with Open Calais using j-calais
 * JPA model semantically enriched for your apps
 
-h2. <a name="usg">Usage</a>
+h2. <a name="inst">Installation</a>
 
 Install locally this module
 
@@ -25,6 +25,8 @@ bc.. require:
 p. and let Play download and install the dependencies 
 
 bc.. $ play deps
+ 
+h2. <a name="usg">Usage</a>
     
 p. Configure Calais in conf/application.conf
 
