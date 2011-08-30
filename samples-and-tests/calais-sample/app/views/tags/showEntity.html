@@ -1,0 +1,29 @@
+#{if _entities}
+<h3>${_name}</h3>
+#{/if}
+#{list items:_entities, as:'entity'}
+		#{if entity.facts || entity.hasGeoMap()}
+		<a href="#" onclick="$.jGrowl($('#${_name}${entity_index}').html(), { sticky: true });return false;">${entity.name}</a>${entity_isLast ? '' : ', '}
+		<div id="${_name}${entity_index}" style="display:none;" class="entity-fact">
+			#{if entity.hasGeoMap()}
+				<strong>${entity.name}</strong>
+				<div class="maps">
+				#{list items:entity.resolutions, as:'resolution'}
+					<img src="${resolution.staticMap()}" /><br/>
+					(${resolution.latitude}, ${resolution.longitude})
+				#{/list}
+				</div>
+			#{/if}
+			#{if entity.facts}
+			#{list items:entity.facts, as:'fact'}
+				<div id="${fact.id.toId()}" style="margin:10px 0;">
+					${fact.renderFact().raw()}
+				</div>
+			#{/list}
+			#{/if}
+		</div>
+		#{/if}
+		#{else}
+			${entity.name}${entity_isLast ? '' : ', '}
+		#{/else}
+#{/list}

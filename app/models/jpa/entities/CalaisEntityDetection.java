@@ -9,6 +9,7 @@ import play.db.jpa.Model;
 @Entity
 public class CalaisEntityDetection extends Model implements Comparable<CalaisEntityDetection> {
     private static final long serialVersionUID = 2865413274776012405L;
+
     @ManyToOne
     public CalaisDocument document;
 

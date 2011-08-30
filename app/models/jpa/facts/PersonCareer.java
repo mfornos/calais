@@ -1,5 +1,6 @@
 package models.jpa.facts;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -18,27 +19,27 @@ public class PersonCareer extends Fact {
 
     private static final long serialVersionUID = -8256910653823430857L;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Person person;
 
     public String careerType;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Position position;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Company company;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Organization organization;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Country country;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public ProvinceOrState provinceOrState;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public City city;
 
     public String status;

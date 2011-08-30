@@ -1,0 +1,14 @@
+# Application dependencies
+
+require:
+    - play
+    - local -> calais 0.1
+
+
+repositories:    
+    - Custom_Modules:
+         type: local
+         artifact: ${application.path}/../[module]
+         contains:
+            - local -> *
+         

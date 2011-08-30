@@ -8,9 +8,11 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import models.jpa.DetectionBase;
+import models.jpa.facts.Fact;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -26,6 +28,6 @@ public class CalaisEntity extends DetectionBase {
         return false;
     }
 
-    // TODO add Fact inverse relation
-    // public Set<Fact> facts = new HashSet<Fact>();
+    @ManyToMany
+    public Set<Fact> facts = new HashSet<Fact>();
 }

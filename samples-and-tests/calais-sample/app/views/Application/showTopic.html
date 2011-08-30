@@ -1,0 +1,12 @@
+#{extends 'main.html' /}
+#{set title:'Topic' /}
+
+<h1>${topic.name} (${topic.topics?.size()})</h1>
+
+<div>
+	<ul>
+		#{list items:topic.topics?.sort(), as: 'detection'}
+			<li><a href="/#${detection.document.reference.id}">${detection.document.reference.title}</a></li>
+		#{/list}
+	</ul>
+</div>

@@ -3,7 +3,7 @@ package extensions;
 import models.jpa.Resolution;
 import play.templates.JavaExtensions;
 
-public class StaticMapExtension extends JavaExtensions {
+public class GoogleMapExtensions extends JavaExtensions {
     public static String staticMap(Resolution resolution) {
         int zoom = (resolution.containedbycountry == null) ? 2 : 10;
         return staticMap(resolution, zoom, "250x250");

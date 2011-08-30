@@ -1,0 +1,12 @@
+#{extends 'main.html' /}
+#{set title:'Tag' /}
+
+<h1>${tag.name} (${tag.socialTags?.size()})</h1>
+
+<div>
+	<ul>
+		#{list items:tag.socialTags?.sort(), as: 'detection'}
+			<li><a href="/#${detection.document.reference.id}">${detection.document.reference.title}</a></li>
+		#{/list}
+	</ul>
+</div>

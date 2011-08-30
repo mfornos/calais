@@ -22,4 +22,8 @@ public class Fact extends DetectionBase {
 
     @ManyToMany(mappedBy = "facts")
     public Set<CalaisDocument> documents = new HashSet<CalaisDocument>();
+
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }

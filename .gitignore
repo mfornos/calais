@@ -3,3 +3,11 @@
 /.settings
 /.classpath
 /bin
+/samples-and-tests/calais-sample/.project
+/samples-and-tests/calais-sample/.settings
+/samples-and-tests/calais-sample/eclipse
+/samples-and-tests/calais-sample/lib
+/samples-and-tests/calais-sample/modules
+/samples-and-tests/calais-sample/test-result
+/samples-and-tests/calais-sample/tmp
+/samples-and-tests/calais-sample/.classpath

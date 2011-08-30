@@ -1,25 +1,26 @@
 package models.jpa;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Query;
+import javax.persistence.PreRemove;
 
+import models.jpa.entities.CalaisEntity;
 import models.jpa.entities.CalaisEntityDetection;
-import models.jpa.entities.City;
 import models.jpa.facts.Fact;
-import play.db.jpa.JPA;
+import play.Play;
 import play.db.jpa.Model;
+import play.exceptions.UnexpectedException;
 
 @Entity
-@NamedQuery(name = "CalaisDocument.findAllCities", query = "from CalaisEntity ent where ent.class = City and exists (select id from CalaisEntityDetection where document.id = :docid and entity.id = ent.id )")
 public class CalaisDocument extends Model {
     private static final long serialVersionUID = 3473635097597885203L;
 
@@ -35,7 +36,7 @@ public class CalaisDocument extends Model {
     @OneToMany(mappedBy = "document")
     public Set<CalaisEntityDetection> entities = new HashSet<CalaisEntityDetection>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     public Set<Fact> facts = new HashSet<Fact>();
 
     public Date updated;
@@ -50,10 +51,28 @@ public class CalaisDocument extends Model {
         save();
     }
 
-    @SuppressWarnings("unchecked")
-    public List<City> getCities() {
-        Query q = JPA.em().createNamedQuery("CalaisDocument.findAllCities");
-        q.setParameter("docid", id);
-        return q.getResultList();
+    public List<CalaisEntity> getEntitiesByType(String type) {
+        if (Play.classloader.getClassIgnoreCase("models.jpa.entities." + type) == null) {
+            throw new UnexpectedException("Invalid entity class " + type);
+        }
+        return find(
+                "from CalaisEntity ent where ent.class = "
+                        + type
+                        + " and exists (select id from CalaisEntityDetection where document.id = ? and entity.id = ent.id )",
+                id).fetch();
+    }
+
+    @PreRemove
+    protected void preRemove() {
+        deleteRefs(topics);
+        deleteRefs(socialTags);
+        deleteRefs(entities);
+        facts = new HashSet<Fact>();
+    }
+
+    private void deleteRefs(Collection<? extends Model> collection) {
+        for (Model d : collection) {
+            d.delete();
+        }
     }
 }

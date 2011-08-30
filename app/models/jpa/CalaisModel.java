@@ -11,6 +11,7 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
 
 import models.jpa.entities.CalaisEntity;
 import models.jpa.entities.CalaisEntityDetection;
@@ -74,6 +75,13 @@ public class CalaisModel extends Model {
         }
 
         return document;
+    }
+
+    @PreRemove
+    protected void preRemove() {
+        if (document != null) {
+            document.delete();
+        }
     }
 
     private void addEntities(CalaisResponse response) {
@@ -195,7 +203,7 @@ public class CalaisModel extends Model {
                 String name = f.getName().toLowerCase();
                 if (!Collection.class.isAssignableFrom(f.getType())) {
                     if (CalaisEntity.class.isAssignableFrom(f.getType())) {
-                        mapRelation(item, obj, f, name);
+                        mapRelation(item, (Fact) obj, f, name);
                     } else {
                         f.set(obj, ConvertUtils.convert(item.getField(name), f.getType()));
                     }
@@ -234,13 +242,13 @@ public class CalaisModel extends Model {
             }
             map(item, obj);
             obj.id = oid;
-            obj = JPA.em().merge(obj).save();
+            obj.save();
         }
 
         return (T) obj;
     }
 
-    private void mapRelation(CalaisObject item, Object obj, Field f, String name) throws IllegalAccessException {
+    private void mapRelation(CalaisObject item, Fact obj, Field f, String name) throws IllegalAccessException {
         String eid = item.getField(name);
         if (eid != null) {
             CalaisEntity entity = null;
@@ -253,6 +261,7 @@ public class CalaisModel extends Model {
             }
             if (entity != null) {
                 f.set(obj, entity);
+                entity.facts.add(obj);
             } else {
                 Logger.warn("No entity for id: %s", eid);
             }
