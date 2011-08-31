@@ -48,9 +48,9 @@ import play.modules.calais.Semantic;
 @Entity
 public class CalaisModel extends Model {
 
-    private static final String MODELS_JPA_FACTS = "models.calais.jpa.facts.";
+    static final String MODELS_JPA_FACTS = "models.calais.jpa.facts.";
 
-    private static final String MODELS_JPA_ENTITIES = "models.calais.jpa.entities.";
+    static final String MODELS_JPA_ENTITIES = "models.calais.jpa.entities.";
 
     public enum AnalysisType {
         FULL, TOPICS, SOCIAL_TAGS, ENTITIES

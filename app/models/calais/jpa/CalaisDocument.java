@@ -54,7 +54,7 @@ public class CalaisDocument extends Model {
     }
 
     public List<CalaisEntity> getEntitiesByType(String type) {
-        if (Play.classloader.getClassIgnoreCase("models.jpa.entities." + type) == null) {
+        if (Play.classloader.getClassIgnoreCase(CalaisModel.MODELS_JPA_ENTITIES + type) == null) {
             throw new UnexpectedException("Invalid entity class " + type);
         }
         return find(
