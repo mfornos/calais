@@ -14,6 +14,7 @@ import mx.bigdata.jcalais.CalaisResponse;
 import org.apache.commons.lang.StringUtils;
 
 import play.Logger;
+import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import play.data.validation.Valid;
 import play.db.jpa.JPABase;
@@ -60,13 +61,17 @@ public class Application extends Controller {
         render();
     }
 
-    public static void save(Long id, @Required String title, @Required String content) {
+    public static void save(Long id, @Required @MaxSize(255) String title, @Required @MaxSize(10000) String content) {
+        SemanticPost post;
         if (validation.hasErrors()) {
             validation.keep();
             flash.error("Please correct these errors !");
-            post();
+            post = new SemanticPost();
+            post.title = title;
+            post.content = content;
+            render("@Application.post", post);
         }
-        SemanticPost post;
+        
         if (id == null) {
             post = new SemanticPost();
             post.title = title;
