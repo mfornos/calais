@@ -48,6 +48,10 @@ import play.modules.calais.Semantic;
 @Entity
 public class CalaisModel extends Model {
 
+    private static final String MODELS_JPA_FACTS = "models.calais.jpa.facts.";
+
+    private static final String MODELS_JPA_ENTITIES = "models.calais.jpa.entities.";
+
     public enum AnalysisType {
         FULL, TOPICS, SOCIAL_TAGS, ENTITIES
     }
@@ -102,7 +106,7 @@ public class CalaisModel extends Model {
             String oid = entity.getField("_uri");
             CalaisEntity sentity = CalaisEntity.findById(oid);
             if (sentity == null) {
-                sentity = mapCalaisObject(oid, "models.jpa.entities.", entity);
+                sentity = mapCalaisObject(oid, MODELS_JPA_ENTITIES, entity);
             }
 
             if (sentity != null) {
@@ -124,7 +128,7 @@ public class CalaisModel extends Model {
             Fact sfact = Fact.findById(oid);
 
             if (sfact == null) {
-                sfact = mapCalaisObject(oid, "models.jpa.facts.", fact);
+                sfact = mapCalaisObject(oid, MODELS_JPA_FACTS, fact);
             }
 
             if (sfact != null) {
