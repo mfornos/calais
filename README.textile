@@ -9,7 +9,7 @@ Calais is a rapidly growing toolkit that allow you to readily incorporate state-
 h2. <a name="fts">Features</a>
 
 * Integration with Open Calais using j-calais
-* JPA model semantically enriched for your apps
+* Semantically enriched JPA model for your apps
 
 h2. <a name="inst">Installation</a>
 
