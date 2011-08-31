@@ -64,7 +64,6 @@ public class Application extends Controller {
     public static void save(Long id, @Required @MaxSize(255) String title, @Required @MaxSize(10000) String content) {
         SemanticPost post;
         if (validation.hasErrors()) {
-            validation.keep();
             flash.error("Please correct these errors !");
             post = new SemanticPost();
             post.title = title;
