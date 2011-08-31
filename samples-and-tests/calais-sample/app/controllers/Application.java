@@ -6,8 +6,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import models.SemanticPost;
-import models.jpa.SocialTag;
-import models.jpa.Topic;
+import models.calais.jpa.SocialTag;
+import models.calais.jpa.Topic;
 import mx.bigdata.jcalais.CalaisClient;
 import mx.bigdata.jcalais.CalaisResponse;
 

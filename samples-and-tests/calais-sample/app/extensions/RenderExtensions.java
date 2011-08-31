@@ -5,8 +5,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
-import models.jpa.entities.CalaisEntity;
-import models.jpa.facts.Fact;
+import models.calais.jpa.entities.CalaisEntity;
+import models.calais.jpa.facts.Fact;
 import play.exceptions.UnexpectedException;
 import play.templates.BaseTemplate.RawData;
 import play.templates.JavaExtensions;

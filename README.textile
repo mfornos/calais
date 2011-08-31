@@ -33,6 +33,8 @@ p. Configure Calais in conf/application.conf
 bc.. ## Calais module configuration
 calais.api.key=[HERE YOUR API KEY]
 
+hibernate.ejb.naming_strategy=play.modules.calais.hibernate.CalaisNamingStrategy
+
 p. If you don't have a Calais api key, <a href="http://www.opencalais.com/APIkey">request one</a>
 
 You can use Play-Calais in various ways. 

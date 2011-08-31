@@ -2,8 +2,8 @@ package extensions;
 
 import java.util.List;
 
-import models.jpa.Resolution;
-import models.jpa.SocialTagDetection;
+import models.calais.jpa.Resolution;
+import models.calais.jpa.SocialTagDetection;
 import play.templates.BaseTemplate.RawData;
 import play.templates.JavaExtensions;
 
