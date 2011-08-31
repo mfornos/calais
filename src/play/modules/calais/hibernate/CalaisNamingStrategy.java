@@ -24,7 +24,7 @@ public class CalaisNamingStrategy extends ImprovedNamingStrategy {
     }
 
     @SuppressWarnings("rawtypes")
-    private boolean isCalaisClassName(String className) {
+    protected boolean isCalaisClassName(String className) {
         if (calaisNames == null) {
             calaisNames = new ArrayList<String>();
             List<Class> classes = Play.classloader.getAnnotatedClasses(Entity.class);
