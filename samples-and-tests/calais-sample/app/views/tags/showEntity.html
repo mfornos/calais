@@ -3,8 +3,8 @@
 #{/if}
 #{list items:_entities, as:'entity'}
 		#{if entity.facts || entity.hasGeoMap()}
-		<a href="#" onclick="$.jGrowl($('#${_name}${entity_index}').html(), { sticky: true });return false;">${entity.name}</a>${entity_isLast ? '' : ', '}
-		<div id="${_name}${entity_index}" style="display:none;" class="entity-fact">
+		<a href="#" onclick="$.jGrowl($('#${_docid}${_name}${entity_index}').html(), { sticky: true });return false;">${entity.name}</a>${entity_isLast ? '' : ', '}
+		<div id="${_docid}${_name}${entity_index}" style="display:none;" class="entity-fact">
 			#{if entity.hasGeoMap()}
 				<strong>${entity.name}</strong>
 				<div class="maps">
