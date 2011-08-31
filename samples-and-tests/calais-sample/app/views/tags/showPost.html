@@ -16,19 +16,22 @@
 		<div class="separator">
 			<strong>Updated</strong>: ${_arg.updated.format('MM/dd, yyyy hh:mma')}
 		</div>
+		#{if _arg.document.topics}
 		<div class="separator">
 			<strong>Topics</strong>:
 			#{list items:_arg.document.topics.sort(), as:'topiclocal'}
 				<a href="@{Application.showTopic(topiclocal.topic.name)}">${topiclocal.topic.name}</a>${topiclocal_isLast ? '' : ', '}
 			#{/list}
 		</div>
+		#{/if}
+		#{if _arg.document.socialTags}
 		<div class="separator">
 		<strong>Social Tags</strong>:
 			<div class="social-tags">
-				${_arg.document.socialTags?.sort().tagCloud('/tag').raw()}
+				${_arg.document.socialTags?.sort().tagCloud('/tag')}
 			</div>
 		</div>
-		
+		#{/if}
 		#{if _arg.document.entities}
 			<div class="semantic-data">
 				<h2>Semantic data</h2>

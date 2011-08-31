@@ -4,11 +4,13 @@ import java.util.List;
 
 import models.jpa.Resolution;
 import models.jpa.SocialTagDetection;
+import play.templates.BaseTemplate.RawData;
 import play.templates.JavaExtensions;
 
 public class CalaisExtensions extends JavaExtensions {
+
     public static String staticMap(Resolution resolution) {
-        int zoom = (resolution.containedbycountry == null) ? 2 : 10;
+        int zoom = (resolution.containedbycountry == null) ? 2 : 5;
         return staticMap(resolution, zoom, "250x250");
     }
 
@@ -29,7 +31,7 @@ public class CalaisExtensions extends JavaExtensions {
         return sb.toString();
     }
 
-    public static String tagCloud(List<SocialTagDetection> socialTags, String link) {
+    public static RawData tagCloud(List<SocialTagDetection> socialTags, String link) {
         StringBuilder sb = new StringBuilder();
         int max = 1; /* score > 0.8 */
         // int min = 2; /* score is between 0.6 and 0.8*/
@@ -41,7 +43,7 @@ public class CalaisExtensions extends JavaExtensions {
                 appendTag("medium-tag", link, sb, d);
             }
         }
-        return sb.toString();
+        return raw(sb.toString());
     }
 
     private static void appendTag(String style, String link, StringBuilder sb, SocialTagDetection d) {
@@ -54,10 +56,5 @@ public class CalaisExtensions extends JavaExtensions {
         sb.append("\">");
         sb.append(d.socialTag.name);
         sb.append("</a>");
-    }
-
-    public <T extends Comparable<? super T>> List<T> sort(List<T> list) {
-        java.util.Collections.sort(list);
-        return list;
     }
 }

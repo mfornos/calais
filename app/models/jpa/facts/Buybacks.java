@@ -6,16 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 import models.jpa.entities.Company;
-import models.jpa.entities.Technology;
 
 @Entity
-@DiscriminatorValue("CompanyTechnology")
-public class CompanyTechnology extends Fact {
-    private static final long serialVersionUID = 4917638705879182889L;
+@DiscriminatorValue("Buybacks")
+public class Buybacks extends Fact {
+    private static final long serialVersionUID = -4118173341961824229L;
 
     @OneToOne(cascade = CascadeType.ALL)
     public Company company;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public Technology technology;
+    public String status;
+    public String date;
+    public String dateString;
 }

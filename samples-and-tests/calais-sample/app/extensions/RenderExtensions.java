@@ -8,13 +8,14 @@ import java.util.Collection;
 import models.jpa.entities.CalaisEntity;
 import models.jpa.facts.Fact;
 import play.exceptions.UnexpectedException;
+import play.templates.BaseTemplate.RawData;
 import play.templates.JavaExtensions;
 
 public class RenderExtensions extends JavaExtensions {
 
-    public static String renderFact(Fact fact) {
+    public static RawData renderFact(Fact fact) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<strong style=\"font-size: 120%;\">");
+        sb.append("<strong class=\"fact-title\">");
         sb.append(fact.getName());
         sb.append("</strong>");
         for (Field f : fact.getClass().getFields()) {
@@ -24,7 +25,7 @@ public class RenderExtensions extends JavaExtensions {
                     if (CalaisEntity.class.isAssignableFrom(f.getType())) {
                         appendName(sb, f);
                         sb.append(((CalaisEntity) object).name);
-                    } else if (String.class.isAssignableFrom(f.getType())) {
+                    } else if (isPrintableField(f)) {
                         appendName(sb, f);
                         sb.append(object);
                     } else if (Collection.class.isAssignableFrom(f.getType())) {
@@ -51,17 +52,25 @@ public class RenderExtensions extends JavaExtensions {
                 throw new UnexpectedException(e);
             }
         }
-        return sb.toString();
-    }
-
-    public static void appendName(StringBuilder sb, Field f) {
-        sb.append("<br /><strong>");
-        sb.append(f.getName());
-        sb.append("</strong>: ");
+        return raw(sb.toString());
     }
 
     public static String toId(String uri) {
         return uri.replaceAll("\\.", "_").replaceAll(":", "-").replaceAll("/", "-");
+    }
+
+    private static void appendName(StringBuilder sb, Field f) {
+        sb.append("<div class=\"spacer\"> </div>");
+        sb.append("<strong>");
+        sb.append(f.getName());
+        sb.append("</strong>: ");
+    }
+
+    private static boolean isPrintableField(Field f) {
+        String name = f.getName();
+        Class<?> type = f.getType();
+        return !("id".equals(name) || "willBeSaved".equals(name))
+                && (String.class.isAssignableFrom(type) || type.isPrimitive());
     }
 
 }

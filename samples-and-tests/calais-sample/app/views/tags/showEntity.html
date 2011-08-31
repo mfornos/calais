@@ -17,7 +17,7 @@
 			#{if entity.facts}
 			#{list items:entity.facts, as:'fact'}
 				<div style="margin:10px 0;">
-					${fact.renderFact().raw()}
+					${fact.renderFact()}
 				</div>
 			#{/list}
 			#{/if}

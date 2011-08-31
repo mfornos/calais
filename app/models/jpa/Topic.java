@@ -9,8 +9,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Table;
 
-@Entity(name = "topics")
-@Table(indexes = { @Index(name = "idx_topic_name", columnNames = { "name" }) }, appliesTo = "topics")
+@Entity
+@Table(indexes = { @Index(name = "idx_topic_name", columnNames = { "name" }) }, appliesTo = "Topic")
 public class Topic extends DetectionBase {
     private static final long serialVersionUID = -2416784342637040547L;
 

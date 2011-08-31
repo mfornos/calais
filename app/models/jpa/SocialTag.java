@@ -9,8 +9,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Table;
 
-@Entity(name = "social_tags")
-@Table(indexes = { @Index(name = "idx_tag_name", columnNames = { "name" }) }, appliesTo = "social_tags")
+@Entity
+@Table(indexes = { @Index(name = "idx_tag_name", columnNames = { "name" }) }, appliesTo = "SocialTag")
 public class SocialTag extends DetectionBase {
     private static final long serialVersionUID = 1404081250119174010L;
 

@@ -264,6 +264,7 @@ body {margin-bottom: 60px;}
 div#jGrowl{margin-top: 45px;}
 div#jGrowl ol, div#jGrowl ul { color: #FFFFFF; margin-bottom: 0;}
 div#jGrowl li { color: #FFFFFF; }
+div#jGrowl strong.fact-title {display:block;font-size: 120%; border-bottom: 1px solid #AAA; padding-bottom: 2px; margin-bottom: 5px;}
 div.jGrowl-notification {float:right;margin-left:6px;}
 div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer { width: 290px !important; max-height: 400px; overflow: auto; }
 a.anchor, a.anchor:hover{color: inherit; text-decoration: none;}
