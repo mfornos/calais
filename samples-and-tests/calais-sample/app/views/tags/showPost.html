@@ -32,7 +32,9 @@
 		#{if _arg.document.entities}
 			<div class="semantic-data">
 				<h2>Semantic data</h2>
-				#{showEntities _arg.document /}
+				<div class="semantic-body">
+					#{showEntities _arg.document /}
+				</div>
 			</div>
 		#{/if}
 	</div>

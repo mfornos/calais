@@ -1,6 +1,31 @@
 #{extends 'main.html' /}
 #{set title:'Analyze' /}
 
+#{if entities}
+<h2>Entities</h2>
+<ul>
+#{list items:entities, as:'entity' }
+	<li><pre>${entity}</pre></li>
+#{/list}
+</ul>
+#{/if}
+
+#{if facts}
+<h2>Facts and Events</h2>
+<ul>
+#{list items:facts, as:'fact' }
+	<li><pre>${fact}</pre></li>
+#{/list}
+</ul>
+#{/if}
+
+#{if payload}
+<h2>Payload</h2>
+<pre>
+	${payload}
+</pre>
+#{/if}
+
 <form method="POST" action="@{Application.analyze}">
 	<fieldset>
 		<legend>Analyze free text</legend>
@@ -18,23 +43,3 @@
 		<a href="/" class="btn">Cancel</a>
 	</div>
 </form>
-
-<div>
-    ${enhanced?.raw()}
-</div>
-
-<ul>
-#{list items:entities, as:'entity' }
-	<li>${entity}</li>
-#{/list}
-</ul>
-
-<ul>
-#{list items:facts, as:'fact' }
-	<li>${fact}</li>
-#{/list}
-</ul>
-
-<div>
-	${payload}
-</div>

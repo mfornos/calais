@@ -3,6 +3,8 @@ package models.jpa;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -228,6 +230,14 @@ public class CalaisModel extends Model {
                         f.set(obj, ConvertUtils.convert(item.getField(name), f.getType()));
                     }
                 } else {
+                    Type genericType = f.getGenericType();
+                    if (genericType instanceof ParameterizedType) {
+                        ParameterizedType pt = (ParameterizedType) genericType;
+                        Type[] actualTypeArguments = pt.getActualTypeArguments();
+                        if (CalaisEntity.class.isAssignableFrom((Class<?>) actualTypeArguments[0])) {
+                            relationsToMap.add(f);
+                        }
+                    }
                     if (RESOLUTIONS.equalsIgnoreCase(f.getName())) {
                         @SuppressWarnings("unchecked")
                         Iterable<Map<String, Object>> resolutions = item.getList(RESOLUTIONS);
@@ -277,24 +287,42 @@ public class CalaisModel extends Model {
         return (T) obj;
     }
 
+    @SuppressWarnings("unchecked")
     private void mapRelation(CalaisObject item, Fact obj, Field f, String name) throws IllegalAccessException {
-        String eid = item.getField(name);
-        if (eid != null) {
-            CalaisEntity entity = null;
-            try {
-                entity = (CalaisEntity) f.getType().getMethod("findById", Object.class).invoke(null, eid);
-            } catch (InvocationTargetException e) {
-                throw new UnexpectedException(e);
-            } catch (NoSuchMethodException e) {
-                throw new UnexpectedException(e);
-            }
-            if (entity != null) {
-                f.set(obj, entity);
-                entity.facts.add(obj);
-                entity.save();
+        try {
+            if (!Collection.class.isAssignableFrom(f.getType())) {
+                String eid = item.getField(name);
+                if (eid != null) {
+                    CalaisEntity entity = (CalaisEntity) f.getType().getMethod("findById", Object.class)
+                            .invoke(null, eid);
+                    if (entity != null) {
+                        f.set(obj, entity);
+                        entity.facts.add(obj);
+                        entity.save();
+                    } else {
+                        Logger.warn("No entity for field: %s", f.getName());
+                    }
+                }
             } else {
-                Logger.warn("No entity for id: %s", eid);
+                Iterable<String> items = item.getList(name);
+                Collection<CalaisEntity> col = (Collection<CalaisEntity>) f.get(obj);
+                for (String eid : items) {
+                    Class<? extends CalaisEntity> clazz = (Class<? extends CalaisEntity>) ((ParameterizedType) f
+                            .getGenericType()).getActualTypeArguments()[0];
+                    CalaisEntity entity = (CalaisEntity) clazz.getMethod("findById", Object.class).invoke(null, eid);
+                    if (entity != null) {
+                        col.add(entity);
+                        entity.facts.add(obj);
+                        entity.save();
+                    } else {
+                        Logger.warn("No entity for field: %s", f.getName());
+                    }
+                }
             }
+        } catch (InvocationTargetException e) {
+            throw new UnexpectedException(e);
+        } catch (NoSuchMethodException e) {
+            throw new UnexpectedException(e);
         }
     }
 
