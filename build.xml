@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="cream" default="build" basedir=".">
+<project name="calais" default="build" basedir=".">
 	<property file="build.properties" />
 	
     <target name="check" unless="play.path">
